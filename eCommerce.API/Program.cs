@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using eCommerce.API.Middlewares;
 using eCommerce.Core;
 using eCommerce.Infrastructure;
@@ -9,7 +10,10 @@ builder.Services.AddInfrastructure();
 builder.Services.AddCore();
 
 // Add controllers to the container
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+});
 var app = builder.Build();
 
 app.UseExceptionHandlingMiddleware();
